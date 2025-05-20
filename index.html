@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Proyección de Precio de Criptomonedas</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/search-styles.css">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Calculadora de Proyección de Precio de Criptomonedas</h1>
+        </header>
+        
+        <!-- Explicación -->
+        <section class="card explanation">
+            <h2>¿Cómo funciona?</h2>
+            <p>Esta herramienta te permite calcular qué capitalización de mercado necesitaría una criptomoneda para alcanzar un precio objetivo específico.</p>
+            <p>La fórmula es: <span class="formula">Capitalización Objetivo = Suministro Circulante × Precio Objetivo</span></p>
+        </section>
+        
+        <!-- Estado de la API -->
+        <div id="api-status" class="api-status loading">
+            <div class="spinner"></div>
+            <span>Conectando con la API de criptomonedas...</span>
+        </div>
+        
+        <!-- Mensajes de error -->
+        <div id="error-message" class="error-message" style="display: none;"></div>
+        
+        <!-- Selección de criptomoneda predefinida -->
+        <section class="card">
+            <h2>Paso 1: Selecciona una criptomoneda</h2>
+            
+            <!-- Buscador de criptomonedas -->
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <input 
+                        type="text" 
+                        id="crypto-search" 
+                        placeholder="Buscar criptomoneda por nombre o símbolo..." 
+                        class="search-input"
+                        autocomplete="off"
+                    >
+                    <button id="search-button" class="search-button">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div id="search-results" class="search-results" style="display: none;"></div>
+                <p class="search-tip">Puedes buscar cualquier criptomoneda disponible en CoinGecko, no solo las mostradas abajo.</p>
+            </div>
+            
+            <div id="crypto-list" class="crypto-grid"></div>
+            
+            <div id="load-more-container" class="load-more-container" style="display: none;">
+                <button id="load-more-btn" class="btn btn-outline">Cargar más criptomonedas</button>
+            </div>
+        </section>
+        
+        <!-- Criptomoneda personalizada -->
+        <section class="card">
+            <h2>o introduce datos personalizados:</h2>
+            <div class="input-grid">
+                <div class="input-group">
+                    <label for="custom-name">Nombre</label>
+                    <input type="text" id="custom-name" placeholder="Ej. Mi Token">
+                </div>
+                <div class="input-group">
+                    <label for="custom-symbol">Símbolo</label>
+                    <input type="text" id="custom-symbol" placeholder="Ej. MTK">
+                </div>
+                <div class="input-group">
+                    <label for="custom-price">Precio actual (USD)</label>
+                    <input type="number" id="custom-price" placeholder="Ej. 0.001" min="0" step="any">
+                </div>
+                <div class="input-group">
+                    <label for="custom-supply">Suministro circulante</label>
+                    <input type="number" id="custom-supply" placeholder="Ej. 1000000000" min="0">
+                </div>
+            </div>
+            <button id="use-custom-btn" class="btn btn-green">Usar datos personalizados</button>
+            <div id="custom-confirmation" class="confirmation-message" style="display: none;"></div>
+        </section>
+        
+        <!-- Precio objetivo -->
+        <section class="card" id="target-price-section" style="display: none;">
+            <h2>Paso 2: Introduce el precio objetivo</h2>
+            <div class="selected-crypto-info" id="selected-crypto-info"></div>
+            <div class="price-input-container">
+                <div class="input-group full-width">
+                    <label for="target-price">Precio objetivo (USD)</label>
+                    <input type="number" id="target-price" placeholder="Ej. 1000" min="0" step="any">
+                </div>
+                <button id="calculate-btn" class="btn btn-blue">Calcular</button>
+            </div>
+        </section>
+        
+        <!-- Resultados -->
+        <section class="card" id="results-section" style="display: none;">
+            <h2>Resultados de la proyección</h2>
+            <div id="results-grid" class="results-grid"></div>
+            <div id="interpretation" class="interpretation"></div>
+        </section>
+        
+        <!-- Información adicional -->
+        <section class="card">
+            <h2>Información adicional</h2>
+            <p>Esta herramienta utiliza datos de la API de CoinGecko en tiempo real. Si la API no está disponible, se utilizan datos predefinidos como respaldo.</p>
+            <p>Para obtener actualizaciones en tiempo real, asegúrate de que el servidor proxy esté en funcionamiento: <code>npm start</code> en la carpeta <code>server</code>.</p>
+            <p>Recuerda que esta herramienta es solo para fines educativos y no constituye asesoramiento financiero.</p>
+        </section>
+        
+        <footer>
+            <p>© 2025 Calculadora de Criptomonedas</p>
+        </footer>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
